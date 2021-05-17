@@ -24,3 +24,56 @@ const salary = document.querySelector('#salary');
             });
 });
 });
+
+// UC - 11 - On Save Create Employee Payroll Object
+
+const save = () => {
+    try {
+        let employeePayRoll = createEmployeePayroll();
+        createAndUpdateStorage(employeePayRoll)
+    }
+    catch (e) {
+        return;
+    }
+}
+
+const createEmployeePayroll = () => {
+    let employeePayrollObj = new EmployeePayRoll();
+    try {
+        employeePayrollObj.name = getInputValueById('#name');
+    }
+    catch (e) {
+        setTextValue('name-error', e);
+        throw e;
+    }
+
+    employeePayrollObj.profilePic = getSelectedValues('[name=profile]').pop();
+    employeePayrollObj.gender = getSelectedValues('[name=gender]').pop();
+    employeePayrollObj.department = getSelectedValues('[name=department]').pop();
+    employeePayrollObj.salary = getInputValueById('#salary');
+    employeePayrollObj.gender = getInputValueById('#notes');
+    let date = getInputValueById('#day') + " " + getInputValueById('#month') + " " + getInputValueById('#year');
+    employeePayrollObj.date = Date.parse(date);
+    alert(employeePayrollObj.toString());
+    return employeePayrollObj;
+}
+
+const getSelectedValues = (propertyValue) => {
+    let allItems = document.querySelectorAll(propertyValue);
+    let selItems = [];
+    allItems.forEach(item => {
+        if (item.checked)
+            seltems.push(item.value);
+    });
+    return selItems
+}
+
+const getInputValueById = (id) => {
+    let value = document.querySelector(id).value;
+    return value;
+}
+
+const getInputElementValue = (id) => {
+    let value = document.getElementById(id).value;
+    return value;
+}
